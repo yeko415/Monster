@@ -3,9 +3,9 @@ import { GLTFLoader } from "https://esm.sh/three@0.180.0/examples/jsm/loaders/GL
 
 const MODEL_PATH = new URL("models./baatli.glb", import.meta.url).href;
 const STATES = [
-  { eyebrow:"ENERGY DRINK", title:"POWER", sub:"YOUR DAY.", description:"Güçlü ve ferahlatıcı enerji deneyimi. Günün temposuna ayak uydurmak için tasarlandı.", x:0.75,y:0.18,z:0,scale:1,rotY:0,cameraZ:6.5 },
-  { eyebrow:"ORIGINAL FORMULA", title:"FEEL", sub:"THE ENERGY.", description:"32 MG / 100 ML kafein. 500 ML kutu. Net, güçlü ve klasik enerji karakteri.", x:0.90,y:0.14,z:0.10,scale:1.08,rotY:-0.35,cameraZ:6.1 },
-  { eyebrow:"500 ML POWER", title:"OWN", sub:"YOUR DAY.", description:"Biraz daha yakından bak. Kutu her adımda konumunu değiştirir ve daha güçlü görünür.", x:0.52,y:0.12,z:0.20,scale:1.18,rotY:0.35,cameraZ:5.7 }
+  { eyebrow:"ENERGY DRINK", title:"POWER", sub:"YOUR DAY.", description:"Güçlü ve ferahlatıcı enerji deneyimi. Günün temposuna ayak uydurmak için tasarlandı.", x:0.25,y:0.18,z:0,scale:1,rotY:0,cameraZ:6.5 },
+  { eyebrow:"ORIGINAL FORMULA", title:"FEEL", sub:"THE ENERGY.", description:"32 MG / 100 ML kafein. 500 ML kutu. Net, güçlü ve klasik enerji karakteri.", x:0.40,y:0.14,z:0.10,scale:1.08,rotY:-0.35,cameraZ:6.1 },
+  { eyebrow:"500 ML POWER", title:"OWN", sub:"YOUR DAY.", description:"Biraz daha yakından bak. Kutu her adımda konumunu değiştirir ve daha güçlü görünür.", x:0.02,y:0.12,z:0.20,scale:1.18,rotY:0.35,cameraZ:5.7 }
 ];
 
 const $=id=>document.getElementById(id);
