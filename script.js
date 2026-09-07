@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { GLTFLoader } from "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/loaders/GLTFLoader.js";
 
-const MODEL_PATH = "./models/baatli.glb";
+const MODEL_PATH = "./models./baatli.glb";
 const container = document.getElementById("three-container");
 const prevButton = document.getElementById("prevButton");
 const nextButton = document.getElementById("nextButton");
