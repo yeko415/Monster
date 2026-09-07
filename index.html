@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MONSTER — 3D Product</title>
+  <style>
+    :root{
+      --green:#75ff00;
+      --bg:#050705;
+      --muted:#8d948d;
+      --line:rgba(117,255,0,.22);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;min-height:100%;background:var(--bg);color:#fff;font-family:Arial,Helvetica,sans-serif}
+    body{overflow-x:hidden}
+    button{font:inherit}
+    .site{min-height:100vh;position:relative;overflow:hidden;background:
+      radial-gradient(circle at 50% 55%,rgba(80,255,0,.10),transparent 30%),
+      radial-gradient(circle at 15% 15%,rgba(117,255,0,.06),transparent 25%),
+      #050705}
+    .grid{
+      position:absolute;left:-10%;right:-10%;bottom:7%;height:42%;
+      transform:perspective(500px) rotateX(61deg);
+      transform-origin:bottom;
+      background-image:
+        linear-gradient(rgba(117,255,0,.14) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(117,255,0,.14) 1px,transparent 1px);
+      background-size:55px 55px;
+      mask-image:linear-gradient(to top,rgba(0,0,0,1),transparent);
+      pointer-events:none;
+    }
+    .noise{position:absolute;inset:0;opacity:.13;pointer-events:none;background-image:radial-gradient(#fff .6px,transparent .7px);background-size:5px 5px}
+    header{
+      position:relative;z-index:5;height:76px;display:flex;align-items:center;
+      justify-content:space-between;padding:0 4.5vw;border-bottom:1px solid rgba(255,255,255,.08)
+    }
+    .logo{font-weight:900;letter-spacing:.18em;color:var(--green);font-size:15px}
+    nav{display:flex;gap:34px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#858b85}
+    nav a{color:inherit;text-decoration:none}
+    .buy{
+      color:var(--green);border:1px solid rgba(117,255,0,.45);padding:10px 17px;
+      text-decoration:none;font-size:10px;letter-spacing:.14em;text-transform:uppercase
+    }
+    main{position:relative;z-index:2;min-height:calc(100vh - 76px);display:grid;grid-template-columns:32% 68%;align-items:center;padding:2vh 4.5vw 6vh}
+    .copy{position:relative;z-index:4;max-width:390px}
+    .eyebrow{font-size:10px;letter-spacing:.32em;color:var(--green);text-transform:uppercase;margin-bottom:24px}
+    h1{font-size:clamp(52px,7vw,108px);line-height:.82;letter-spacing:-.055em;margin:0;text-transform:uppercase}
+    h1 span{color:var(--green)}
+    .desc{color:#8d948d;line-height:1.55;font-size:13px;max-width:300px;margin:28px 0}
+    .cta{display:inline-flex;align-items:center;gap:18px;padding:13px 19px;background:var(--green);color:#031000;text-decoration:none;font-weight:800;font-size:11px;letter-spacing:.13em;text-transform:uppercase}
+    .stats{display:flex;gap:24px;margin-top:34px}
+    .stat strong{display:block;font-size:15px;color:#fff}.stat small{font-size:8px;color:#6f766f;letter-spacing:.1em;text-transform:uppercase}
+    .stage{height:min(720px,76vh);min-height:430px;position:relative}
+    #canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none}
+    .hint{position:absolute;right:3%;top:7%;font-size:9px;letter-spacing:.22em;color:#6f766f;text-transform:uppercase}
+    .product-name{position:absolute;right:4%;bottom:18%;text-align:right}
+    .product-name b{display:block;font-size:12px;letter-spacing:.2em;color:var(--green)}
+    .product-name span{font-size:9px;letter-spacing:.15em;color:#6f766f}
+    .controls{position:absolute;right:3%;bottom:7%;display:flex;gap:10px;z-index:6}
+    .arrow{
+      width:50px;height:50px;border:1px solid rgba(117,255,0,.35);background:rgba(3,10,3,.7);
+      color:#fff;cursor:pointer;font-size:20px;transition:.2s
+    }
+    .arrow:hover{border-color:var(--green);color:var(--green);transform:translateY(-2px)}
+    .dots{position:absolute;left:4.5%;bottom:6%;display:flex;gap:7px;z-index:5}
+    .dot{width:22px;height:2px;background:#3b423b}.dot.active{background:var(--green);width:42px}
+    .scan{position:absolute;left:50%;top:50%;width:310px;height:310px;border:1px solid rgba(117,255,0,.12);border-radius:50%;transform:translate(-50%,-50%);pointer-events:none}
+    .scan:after{content:"";position:absolute;inset:18%;border:1px solid rgba(117,255,0,.08);border-radius:50%}
+    @media(max-width:850px){
+      header{height:64px;padding:0 20px}nav{display:none}.buy{padding:9px 12px}
+      main{display:block;min-height:calc(100vh - 64px);padding:30px 20px 25px}
+      .copy{max-width:none}.eyebrow{margin-bottom:14px}h1{font-size:58px}
+      .desc{font-size:12px;margin:18px 0;max-width:280px}.stats{margin-top:18px;gap:18px}
+      .stage{height:58vh;min-height:390px;margin-top:-5px}
+      .hint{top:2%;right:0}.product-name{bottom:13%;right:0}.controls{right:0;bottom:2%}
+      .arrow{width:46px;height:46px}.dots{left:0;bottom:3%}
+      .scan{width:250px;height:250px}
+    }
+    @media(prefers-reduced-motion:reduce){
+      *{scroll-behavior:auto!important}
+    }
+  </style>
+</head>
+<body>
+<div class="site" id="site">
+  <div class="grid"></div><div class="noise"></div>
+  <header>
+    <div class="logo">MONSTER</div>
+    <nav><a href="#">Products</a><a href="#">Energy</a><a href="#">Story</a><a href="#">About</a></nav>
+    <a class="buy" href="#">GET YOURS</a>
+  </header>
+
+  <main>
+    <section class="copy">
+      <div class="eyebrow">Energy / 3D Collection</div>
+      <h1>UNLEASH<br><span>THE ENERGY</span></h1>
+      <p class="desc">Ürünün etrafında dolaş. Sağ ve sol oklarla sahneyi değiştir, dokunarak sürükle ve 3D modeli keşfet.</p>
+      <a class="cta" href="#">SHOP NOW <span>→</span></a>
+      <div class="stats">
+        <div class="stat"><strong>160mg</strong><small>Caffeine</small></div>
+        <div class="stat"><strong>100%</strong><small>Energy</small></div>
+        <div class="stat"><strong>0g</strong><small>Fat</small></div>
+      </div>
+    </section>
+
+    <section class="stage" aria-label="3D ürün görüntüleyici">
+      <div class="scan"></div>
+      <div class="hint">← SWIPE / DRAG →</div>
+      <canvas id="canvas"></canvas>
+      <div class="product-name"><b>MONSTER ENERGY</b><span>ORIGINAL / 500 ML</span></div>
+      <div class="controls">
+        <button class="arrow" id="prev" type="button" aria-label="Önceki ürün">←</button>
+        <button class="arrow" id="next" type="button" aria-label="Sonraki ürün">→</button>
+      </div>
+    </section>
+  </main>
+  <div class="dots" id="dots" aria-hidden="true"></div>
+</div>
+
+<script type="module">
+  import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js";
+  import { GLTFLoader } from "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/loaders/GLTFLoader.js";
+
+  const canvas = document.getElementById("canvas");
+  const stage = document.querySelector(".stage");
+  const prev = document.getElementById("prev");
+  const next = document.getElementById("next");
+  const dots = document.getElementById("dots");
+  const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
+  camera.position.set(0, 0.15, 6.2);
+
+  const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true});
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 1.8));
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.25;
+
+  scene.add(new THREE.AmbientLight(0xffffff, 1.2));
+  const key = new THREE.DirectionalLight(0xffffff, 3.0); key.position.set(3,4,5); scene.add(key);
+  const rim = new THREE.PointLight(0x75ff00, 18, 9); rim.position.set(-2,1.5,2); scene.add(rim);
+  const fill = new THREE.PointLight(0x2bff88, 8, 7); fill.position.set(2,-1,1); scene.add(fill);
+
+  const group = new THREE.Group();
+  scene.add(group);
+
+  const loader = new GLTFLoader();
+  let model = null;
+  let targetRot = 0;
+  let currentRot = 0;
+  let dragging = false;
+  let lastX = 0;
+  let velocity = 0;
+
+  // Aynı tek model, carousel mantığını göstermek için sahnede art arda kullanılıyor.
+  // Daha sonra her slayta farklı .glb koymak yeterli.
+  loader.load("./assets/baatli.glb", (gltf) => {
+    model = gltf.scene;
+    const box = new THREE.Box3().setFromObject(model);
+    const size = box.getSize(new THREE.Vector3());
+    const center = box.getCenter(new THREE.Vector3());
+    model.position.sub(center);
+    const maxDim = Math.max(size.x,size.y,size.z);
+    model.scale.setScalar(3.05 / maxDim);
+    group.add(model);
+  }, undefined, (err) => {
+    console.error("3D model yüklenemedi:", err);
+  });
+
+  let slide = 0;
+  const count = 5;
+  for(let i=0;i<count;i++){
+    const d=document.createElement("div");
+    d.className="dot"+(i===0?" active":"");
+    dots.appendChild(d);
+  }
+
+  function go(dir){
+    slide = (slide + dir + count) % count;
+    targetRot += dir * Math.PI * 0.72;
+    const ds = [...dots.children];
+    ds.forEach((d,i)=>d.classList.toggle("active",i===slide));
+    velocity += dir * 0.035;
+  }
+  prev.addEventListener("click",()=>go(-1));
+  next.addEventListener("click",()=>go(1));
+
+  canvas.addEventListener("pointerdown", e=>{
+    dragging=true; lastX=e.clientX; canvas.setPointerCapture(e.pointerId);
+  });
+  canvas.addEventListener("pointermove", e=>{
+    if(!dragging)return;
+    const dx=e.clientX-lastX; lastX=e.clientX;
+    targetRot += dx*0.008; velocity += dx*0.00035;
+  });
+  function endDrag(){dragging=false}
+  canvas.addEventListener("pointerup",endDrag);
+  canvas.addEventListener("pointercancel",endDrag);
+
+  function resize(){
+    const r=stage.getBoundingClientRect();
+    const w=Math.max(1,r.width),h=Math.max(1,r.height);
+    renderer.setSize(w,h,false);
+    camera.aspect=w/h; camera.updateProjectionMatrix();
+  }
+  addEventListener("resize",resize); resize();
+
+  const clock = new THREE.Clock();
+  function animate(){
+    requestAnimationFrame(animate);
+    const t=clock.getElapsedTime();
+    if(!dragging) targetRot += velocity;
+    velocity *= 0.91;
+    if(model){
+      currentRot += (targetRot-currentRot)*0.075;
+      model.rotation.y = currentRot + (reduceMotion?0:Math.sin(t*.55)*.025);
+      model.position.y = reduceMotion ? 0 : Math.sin(t*.9)*.035;
+    }
+    renderer.render(scene,camera);
+  }
+  animate();
+</script>
+</body>
+</html>
