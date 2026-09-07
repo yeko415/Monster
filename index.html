@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#080808" />
+  <title>Energy 3D</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main id="app">
+    <header class="topbar">
+      <div class="logo">ENERGY</div>
+      <nav class="nav">
+        <a href="#products">Ürünler</a>
+        <a href="#about">Hakkımızda</a>
+        <a href="#contact">İletişim</a>
+      </nav>
+      <button class="menu-button" id="menuButton" type="button" aria-label="Menüyü aç">
+        <span></span><span></span><span></span>
+      </button>
+    </header>
+
+    <section class="hero" id="products">
+      <div class="hero-content">
+        <p class="eyebrow">ENERGY DRINK</p>
+        <h1>POWER <span>YOUR DAY.</span></h1>
+        <p class="hero-description">Ürünler arasında kaydır. Ortadaki kutuya dokun ve ürünü yakından keşfet.</p>
+        <div class="controls">
+          <button id="prevButton" type="button" aria-label="Önceki ürün">←</button>
+          <div class="pagination">
+            <span id="currentNumber">01</span>
+            <span class="pagination-line"></span>
+            <span id="totalNumber">03</span>
+          </div>
+          <button id="nextButton" type="button" aria-label="Sonraki ürün">→</button>
+        </div>
+      </div>
+
+      <div id="three-container" aria-label="3D ürün görüntüleyici"></div>
+
+      <div class="bottom-hint" id="bottomHint">
+        <span class="mouse-icon"></span>
+        <span>KAYDIR</span>
+      </div>
+    </section>
+
+    <section class="product-detail" id="productDetail" aria-hidden="true">
+      <div class="detail-inner">
+        <div class="detail-label">PRODUCT</div>
+        <h2 id="productTitle">ENERGY ORIGINAL</h2>
+        <p id="productDescription">Güçlü karakteri ve ferahlatıcı tadıyla günün her anına eşlik eden enerji içeceği.</p>
+        <div class="product-meta">
+          <div><span>ENERGY</span><strong id="productEnergy">32 MG / 100 ML</strong></div>
+          <div><span>SIZE</span><strong id="productSize">500 ML</strong></div>
+          <div><span>TYPE</span><strong id="productType">ENERGY DRINK</strong></div>
+        </div>
+        <button class="close-detail" id="closeDetail" type="button">ÜRÜNLERE DÖN</button>
+      </div>
+    </section>
+
+    <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+      <button id="closeMenu" class="close-menu" type="button" aria-label="Menüyü kapat">×</button>
+      <nav>
+        <a href="#products">Ürünler</a>
+        <a href="#about">Hakkımızda</a>
+        <a href="#contact">İletişim</a>
+      </nav>
+    </div>
+  </main>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js"
+    }
+  }
+  </script>
+  <script type="module" src="script.js"></script>
+</body>
+</html>
